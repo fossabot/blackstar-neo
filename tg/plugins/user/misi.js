@@ -45,7 +45,7 @@ export default (bot) => {
         },
       })
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
   });
 
@@ -67,12 +67,12 @@ export default (bot) => {
       ctx
         .reply("<b>🎉 MISI SELESAI!</b>\n+5.000 koin.", { parse_mode: "HTML" })
         .catch((e) => {
-          (global.consolefy?.error || console.error)("Error execution:", e);
+          console.error("Error execution:", e);
         });
       ctx
         .editMessageCaption(mainMenu(userId).caption, mainMenu(userId))
         .catch((e) => {
-          (global.consolefy?.error || console.error)("Error execution:", e);
+          console.error("Error execution:", e);
         });
     } else {
       ctx.answerCbQuery("❌ Kamu belum join semua channel!", {

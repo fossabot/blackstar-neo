@@ -20,7 +20,7 @@ export default (bot) => {
         },
       })
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
   });
 
@@ -55,7 +55,7 @@ export default (bot) => {
         },
       })
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
   });
 };

@@ -16,7 +16,7 @@ export default (bot) => {
         "✅ MISI DISETUJUI!\nAdmin telah memverifikasi bukti share kamu.\n+5.000 Coin telah ditambahkan.",
       )
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
     return ctx.editMessageCaption(
       `✅ <b>MISI BERHASIL (ACC)</b>\nTarget ID: <code>${targetId}</code>\nKoin sudah ditambahkan otomatis.`,
@@ -36,7 +36,7 @@ export default (bot) => {
         { parse_mode: "HTML" },
       )
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
     return ctx.editMessageCaption(
       `❌ <b>MISI DITOLAK</b>\nUser ID: <code>${targetId}</code> sudah diberitahu.`,

@@ -97,7 +97,7 @@ const startTelegramBot = async (config) => {
     !config.tgbot.botfatherToken ||
     config.tgbot.botfatherToken === "BOTFATHER_TOKEN"
   ) {
-    (global.consolefy?.log || console.log)(
+    console.log(
       "Telegram bot token not provided, skipping Telegram bot initialization.",
     );
     return null;
@@ -127,7 +127,7 @@ const startTelegramBot = async (config) => {
 
   // Error handling setup
   bot.catch((err, ctx) => {
-    (global.consolefy?.error || console.error)(
+    console.error(
       `Ooops, encountered an error for ${ctx.updateType}`,
       err,
     );
@@ -159,7 +159,7 @@ const startTelegramBot = async (config) => {
     if (ctx.callbackQuery) {
       // Suppress default loading state for buttons
       ctx.answerCbQuery().catch((e) => {
-        (global.consolefy?.error || console.error)(
+        console.error(
           "Error during answerCbQuery:",
           e,
         );
@@ -193,7 +193,7 @@ const startTelegramBot = async (config) => {
               await plugin.default(bot);
             }
           } catch (e) {
-            (global.consolefy?.error || console.error)(
+            console.error(
               `Failed to load plugin ${entry.name}:`,
               e,
             );
@@ -201,7 +201,7 @@ const startTelegramBot = async (config) => {
         }
       }
     } catch (e) {
-      (global.consolefy?.error || console.error)(
+      console.error(
         "Error reading tg plugins directory",
         e,
       );
@@ -213,13 +213,13 @@ const startTelegramBot = async (config) => {
   bot
     .launch()
     .then(() => {
-      (global.consolefy?.log || console.log)(
+      console.log(
         "✅ Telegram bot started successfully.",
       );
       global.tgBot = bot;
     })
     .catch((err) => {
-      (global.consolefy?.error || console.error)(
+      console.error(
         "❌ Failed to start Telegram bot:",
         err,
       );

@@ -29,7 +29,7 @@ export default (bot) => {
     ctx
       .editMessageCaption(mainMenu(userId).caption, mainMenu(userId))
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
   });
 };

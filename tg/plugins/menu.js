@@ -51,7 +51,7 @@ export default (bot) => {
         ]),
       });
     } catch (error) {
-      global.consolefy?.error(error) ||
+
         console.error("Error in menu command:", error);
       ctx.reply("❌ Error generating menu.");
     }
@@ -64,7 +64,7 @@ export default (bot) => {
         "Statistics feature is not yet fully implemented for Telegram.",
       );
     } catch (e) {
-      global.consolefy?.error(e) || console.error(e);
+      console.error(e);
     }
   });
 };

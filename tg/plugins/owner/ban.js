@@ -17,7 +17,7 @@ export default (bot) => {
         { parse_mode: "HTML" },
       )
       .catch((e) => {
-        (global.consolefy?.error || console.error)(
+        console.error(
           "Error during execution:",
           e,
         );
@@ -42,7 +42,7 @@ export default (bot) => {
         { parse_mode: "HTML" },
       )
       .catch((e) => {
-        (global.consolefy?.error || console.error)(
+        console.error(
           "Error during execution:",
           e,
         );

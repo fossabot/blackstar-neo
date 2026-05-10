@@ -20,7 +20,7 @@ export default (bot) => {
         parse_mode: "HTML",
       })
       .catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
 
     setTimeout(() => {
@@ -30,7 +30,7 @@ export default (bot) => {
           parse_mode: "HTML",
         })
         .catch((e) => {
-          (global.consolefy?.error || console.error)("Error execution:", e);
+          console.error("Error execution:", e);
         });
 
       if (tgbotConfig.newsletter) {
@@ -41,11 +41,11 @@ export default (bot) => {
             { parse_mode: "HTML" },
           )
           .catch((e) => {
-            (global.consolefy?.error || console.error)("Error execution:", e);
+            console.error("Error execution:", e);
           });
       }
       ctx.reply(mainMenu(userId).caption, mainMenu(userId)).catch((e) => {
-        (global.consolefy?.error || console.error)("Error execution:", e);
+        console.error("Error execution:", e);
       });
     }, 3000);
   });

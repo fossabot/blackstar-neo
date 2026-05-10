@@ -23,7 +23,7 @@ export default (bot) => {
                     caption: `<b>🚨 LAPORAN MISI</b>\n\n👤 Pengirim: <code>${userId}</code>\n🆔 ID Target: <code>${userTargetId}</code>`,
                     parse_mode: 'HTML',
                     reply_markup: { inline_keyboard: [[{ text: "✅ ACC", callback_data: `acc_share_${userTargetId}` }, { text: "❌ TOLAK", callback_data: `tolak_share_${userTargetId}` }]] }
-                }).catch((e) => { (global.consolefy?.error || console.error)('Error during execution:', e); });
+                }).catch((e) => { console.error('Error during execution:', e); });
                 delete ownerState[userId];
                 return ctx.reply("✅ <b>Bukti Berhasil Dikirim ke Owner!</b>", { parse_mode: 'HTML' });
             }
@@ -48,7 +48,7 @@ export default (bot) => {
                     bot.telegram.sendMessage(id, `📢 <b>MISI BARU</b>\n💰 <b>Hadiah:</b> ${reward.toLocaleString()} Coin`, {
                         parse_mode: 'HTML',
                         reply_markup: { inline_keyboard: [[{ text: "🔗 Gabung", url: state.linkMisi }], [{ text: "✅ Saya Sudah Join", callback_data: `check_join|${channelUsername}|${reward}|${misiId}` }]] }
-                    }).catch((e) => { (global.consolefy?.error || console.error)('Error during execution:', e); });
+                    }).catch((e) => { console.error('Error during execution:', e); });
                 });
                 delete ownerState[userId];
                 return ctx.reply("✅ <b>Misi berhasil disebar!</b>", { parse_mode: 'HTML' });
@@ -74,7 +74,7 @@ export default (bot) => {
                 if (tgbotConfig.newsletter) {
                     bot.telegram.sendMessage(tgbotConfig.newsletter, `<b>🎁 KODE REDEEM BARU!</b>\n🔑 <b>Kode :</b> <code>${state.code}</code>\n💰 <b>Hadiah :</b> ${reward} Koin`, { parse_mode: 'HTML' })
                         .then(() => ctx.reply(`✅ Berhasil! Kode <b>${state.code}</b> aktif.`, { parse_mode: 'HTML' }))
-                        .catch((e) => { ctx.reply(`✅ Kode aktif di DB, tapi <b>GAGAL</b> kirim ke channel!`); (global.consolefy?.error || console.error)(e); });
+                        .catch((e) => { ctx.reply(`✅ Kode aktif di DB, tapi <b>GAGAL</b> kirim ke channel!`); console.error(e); });
                 } else {
                     ctx.reply(`✅ Berhasil! Kode <b>${state.code}</b> aktif.`, { parse_mode: 'HTML' });
                 }
@@ -135,7 +135,7 @@ export default (bot) => {
 
             next();
         } catch (e) {
-            (global.consolefy?.error || console.error)("Error di handler message:", e);
+            console.error("Error di handler message:", e);
             next();
         }
     });

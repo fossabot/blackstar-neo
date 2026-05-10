@@ -13,7 +13,7 @@ export default (bot) => {
         );
       })
       .catch((err) => {
-        global.consolefy?.error(err) ||
+
           console.error("Error in ping command:", err);
         ctx.reply("Pong! 🏓");
       });

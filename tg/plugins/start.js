@@ -44,7 +44,7 @@ export default (bot) => {
                 { parse_mode: "HTML" },
               )
               .catch((e) => {
-                (global.consolefy?.error || console.error)(
+                console.error(
                   "Error during execution:",
                   e,
                 );
@@ -112,7 +112,7 @@ export default (bot) => {
         });
       });
     } catch (e) {
-      (global.consolefy?.error || console.error)(e);
+      console.error(e);
     }
   });
 
@@ -121,7 +121,7 @@ export default (bot) => {
     const userId = ctx.from.id;
     if (await checkJoin(userId)) {
       ctx.deleteMessage().catch((e) => {
-        (global.consolefy?.error || console.error)(
+        console.error(
           "Error during execution:",
           e,
         );
@@ -140,7 +140,7 @@ export default (bot) => {
     ctx
       .editMessageCaption(mainMenu(userId).caption, mainMenu(userId))
       .catch((e) => {
-        (global.consolefy?.error || console.error)(
+        console.error(
           "Error during execution:",
           e,
         );
