@@ -1,8 +1,8 @@
-# AGENTS.md — Sakurabot
+# AGENTS.md — Blackstar
 
 ## 1) Project Overview
 
-- **Name**: Sakurabot
+- **Name**: Blackstar
 - **Deskripsi**: Bot WhatsApp dan Telegram yang berjalan berdampingan dalam satu codebase.
 - **Tujuan**: Menyediakan fitur otomatisasi chat, utilitas grup, dan command interaktif secara stabil.
 - **Target users**: Pengguna WhatsApp & Telegram (personal chat dan grup).
@@ -230,3 +230,5 @@ Saya ingin memberitahukan bahwa tugas yang anda berikan mengenai bla bla bla sud
 *jelaskan perubahan yang dilakukan
 *improvisasikan pesan dengan menambahkan informasi tambahan dan emoji
 ```
+
+2. Catat dan perbarui MEMORY.md dengan setiap informasi baru yang kamu dapatkan dari pengalamanmu melakukan perubahan terhadap codebase.
