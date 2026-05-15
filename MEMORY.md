@@ -16,3 +16,8 @@
 - Updated routing in `text-generation.js` to point the `/claude` command specifically to the `lexcode` endpoint while preserving default behavior for others.
 - Updated default Gemini model to `gemini-robotics-er-1.6-preview` in `Gemini.js`.
 - Audited `Gemini.js` for compliance with Google AI Studio. Code conforms to current REST schemas.
+
+## MCP Skill Generation
+- Investigated tools like `uvx mcp2cli` for creating CLI representations of MCP remote servers.
+- Generated a `SKILL.md` under `.agents/skills/kone_mcp/` detailing how to use `mcp2cli` against an MCP endpoint.
+- Note: `https://go.kone.vc/mcp` returns a 400 Bad Request error `{"error":{"code":400,"message":"Incorrect app URL"}}`, requiring a fully-qualified app URL or correct credentials to work properly with mcp2cli.
