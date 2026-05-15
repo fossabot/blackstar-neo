@@ -11,3 +11,8 @@
 
 ## API Integration
 - Added wrapper for the `lexcode` API in `lib/Request.js`, available at `https://api.lexcode.biz.id/api/`.
+
+## AI Model Integration Updates
+- Updated routing in `text-generation.js` to point the `/claude` command specifically to the `lexcode` endpoint while preserving default behavior for others.
+- Updated default Gemini model to `gemini-robotics-er-1.6-preview` in `Gemini.js`.
+- Audited `Gemini.js` for compliance with Google AI Studio. Code conforms to current REST schemas.

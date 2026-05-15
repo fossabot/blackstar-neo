@@ -1,4 +1,4 @@
-import { nexray } from "../../../lib/Request.js";
+import { nexray, lexcode } from "../../../lib/Request.js";
 
 export default {
   command: [
@@ -27,7 +27,8 @@ export default {
       if (command === "dolphin") params.template = "logical";
       if (command === "glm") params.model = "glm-4.6";
       if (command === "hammer") params.model = "Sleepy";
-      const data = await nexray("ai/" + path, params);
+      const endpoint = command === "claude" ? lexcode : nexray;
+      const data = await endpoint("ai/" + path, params);
       if (!data.status) return m.reply("❌ Failed to get data.");
       m.reply(data.result);
     } catch (error) {
