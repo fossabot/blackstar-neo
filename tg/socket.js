@@ -1,95 +1,9 @@
-import { Telegraf } from "telegraf";
+import { Telegraf } from "telegraf-hardened";
 import fs from "fs/promises";
 import path from "path";
 
-import { TelegramDatabase } from "../lib/TelegramDatabase.js";
-
-const dbFile = (await import("path")).join(
-  process.cwd(),
-  "data/tg/database.json",
-);
-const db = TelegramDatabase(dbFile);
-let ownerState = {};
-
-async function checkJoin(bot, tgbotConfig, userId) {
-  try {
-    const chats = [...tgbotConfig.channels, tgbotConfig.group].filter(Boolean);
-    if (chats.length === 0) return true;
-    for (let chat of chats) {
-      const member = await bot.telegram.getChatMember(chat, userId);
-      if (["left", "kicked", "restricted"].includes(member.status))
-        return false;
-    }
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-const mainMenu = (tgbotConfig, userId) => {
-  if (!db.hasUser(userId)) {
-    db.updateUser(userId, {
-      coin: 0,
-      joined: false,
-      refCount: 0,
-      lastClaim: 0,
-      isBanned: false,
-      claimedMissions: {},
-    });
-    db.writeToFile();
-  }
-
-  const user = db.getUser(userId);
-  const saldo = (user.coin || 0).toLocaleString();
-
-  const caption =
-    `<b>─〔 🤖 BOT COIN SCRIPT 〕─</b>\n\n` +
-    `👋 Selamat Datang, <b>${userId}</b>!\n` +
-    `┣ 💰 <b>Saldo :</b> ${saldo} Coins\n` +
-    `┣ 👥 <b>Referral :</b> ${user.refCount || 0} Orang\n` +
-    `┗ 🆔 <b>Status :</b> ${userId === tgbotConfig.ownerId ? "Owner" : "Member"}\n\n` +
-    `<blockquote>Kumpulkan koin dengan mengajak teman bergabung dan tukarkan dengan script premium!</blockquote>\n` +
-    `<b>──────────────────────</b>`;
-
-  let buttons = [
-    [
-      { text: "🛒 Tukar Coin", callback_data: "tukar_coin" },
-      { text: "📜 List Script", callback_data: "list_script" },
-    ],
-    [
-      { text: "🎁 Klaim Harian", callback_data: "daily_claim" },
-      { text: "🎰 Lucky Spin", callback_data: "lucky_spin" },
-    ],
-    [
-      { text: "📦 Mystery Box", callback_data: "gacha_script" },
-      { text: "🎮 Tebak Angka", callback_data: "tebak_angka" },
-    ],
-    [
-      { text: "📝 Misi Coin", callback_data: "list_misi" },
-      { text: "💰 Beli Coin", callback_data: "beli_coin" },
-    ],
-    [
-      { text: "💳 Ambil Coin", callback_data: "referral" },
-      { text: "🏆 Top Sultan", callback_data: "leaderboard" },
-    ],
-    [
-      { text: "📊 Statistik", callback_data: "bot_stats" },
-      { text: "💸 Transfer Coin", callback_data: "transfer_coin" },
-    ],
-    [{ text: "🆓 Coin Gratis", callback_data: "coin_gratis" }],
-    [{ text: "💬 Code Redeem", url: "https://t.me/bot_coin_info" }],
-  ];
-
-  if (userId === tgbotConfig.ownerId) {
-    buttons.push([{ text: "⚙️ OWNER DASHBOARD", callback_data: "owner_menu" }]);
-  }
-
-  return {
-    caption: caption,
-    parse_mode: "HTML",
-    reply_markup: { inline_keyboard: buttons },
-  };
-};
+// We keep Blackstar imports instead of the payload ones
+import { forceSubscribeMiddleware, roleLimitMiddleware } from "./middleware.js";
 
 const startTelegramBot = async (config) => {
   if (
@@ -105,124 +19,99 @@ const startTelegramBot = async (config) => {
 
   const bot = new Telegraf(config.tgbot.botfatherToken);
 
-  // Setup Coinbot Logic Context
-  const tgbotConfig = {
-    channels: config.tgbot?.channels || [],
-    group: config.tgbot?.group || "",
-    newsletter: config.tgbot?.newsletterId || "",
-    startImage:
-      config.tgbot?.startImage || "https://files.catbox.moe/w6izfk.jpg",
-    ownerId: config.tgbot?.ownerId ? Number(config.tgbot.ownerId) : null,
-  };
-
+  // Setup Database
+  const { Database } = await import("../lib/Database.js");
+  const db = Database();
   await db.readFromFile();
-  bot.context.tgbot = {
-    db: db,
-    saveDB: () => db.writeToFile(),
-    ownerState,
-    config: tgbotConfig,
-    checkJoin: (userId) => checkJoin(bot, tgbotConfig, userId),
-    mainMenu: (userId) => mainMenu(tgbotConfig, userId),
-  };
 
-  // Error handling setup
+  bot.context.db = db;
+  bot.context.config = config;
+
+  // Middlewares
+  bot.use(forceSubscribeMiddleware(config.tgbot.newsletterId));
+  bot.use(roleLimitMiddleware(db, config));
+
   bot.catch((err, ctx) => {
-    console.error(
-      `Ooops, encountered an error for ${ctx.updateType}`,
-      err,
-    );
+    console.error(`Ooops, encountered an error for ${ctx.updateType}`, err);
   });
 
   bot.use(async (ctx, next) => {
-    // Maintenance Mode Check
-    const tgbotConfig = ctx.tgbot?.config;
-    const db = ctx.tgbot?.db;
-    const userId = ctx.from?.id;
-
-    if (db?.getSetting()?.maintenance && userId !== tgbotConfig?.ownerId) {
-      if (ctx.callbackQuery) {
-        await ctx
-          .answerCbQuery(
-            "🚧 Bot sedang Maintenance!\nSemua fitur dimatikan sementara.",
-            { show_alert: true },
-          )
-          .catch(() => {});
-        return;
-      } else {
-        await ctx
-          .reply("🚧 <b>BOT SEDANG MAINTENANCE</b>", { parse_mode: "HTML" })
-          .catch(() => {});
-        return;
-      }
-    }
-
     if (ctx.callbackQuery) {
-      // Suppress default loading state for buttons
       ctx.answerCbQuery().catch((e) => {
-        console.error(
-          "Error during answerCbQuery:",
-          e,
-        );
+        console.error("Error during answerCbQuery:", e);
       });
     }
-
     await next();
   });
 
-  // Command loading logic
-  const pluginsPath = path.join(process.cwd(), "tg", "plugins");
+  bot.command("start", (ctx) => {
+    ctx.reply(
+      `✦ Blackstar ✦\n\nWelcome to Blackstar Bot, ${ctx.from.first_name}!\n\nYour Role: ${ctx.blackstar.isOwner ? "Owner" : ctx.blackstar.isPartner ? "Partner" : ctx.blackstar.isPremium ? "Premium" : "Member"}\nLimits remaining: ${ctx.blackstar.isPremium || ctx.blackstar.isOwner ? "Unlimited" : ctx.blackstar.user.limit}`,
+    );
+  });
 
-  try {
-    await fs.access(pluginsPath);
-  } catch {
-    await fs.mkdir(pluginsPath, { recursive: true });
-  }
+  // Topup command for Telegram Stars
+  bot.command("topup", (ctx) => {
+    const amountStr = ctx.message.text.split(" ")[1];
+    const amount = parseInt(amountStr);
 
-  const loadPlugins = async (dirPath) => {
-    try {
-      const entries = await fs.readdir(dirPath, { withFileTypes: true });
-      for (const entry of entries) {
-        const fullPath = path.join(dirPath, entry.name);
-        if (entry.isDirectory()) {
-          await loadPlugins(fullPath);
-        } else if (entry.name.endsWith(".js")) {
-          try {
-            const pluginUrl = new URL(`file://${fullPath}`);
-            const plugin = await import(pluginUrl);
-            if (plugin.default && typeof plugin.default === "function") {
-              await plugin.default(bot);
-            }
-          } catch (e) {
-            console.error(
-              `Failed to load plugin ${entry.name}:`,
-              e,
-            );
-          }
-        }
-      }
-    } catch (e) {
-      console.error(
-        "Error reading tg plugins directory",
-        e,
+    if (!amount || amount <= 0) {
+      return ctx.reply(
+        "✦ Blackstar ✦\n\nPlease specify the amount of Telegram Stars to spend.\nExample: /topup 10\n\n(1 Star = 50 Sakuranite)",
       );
     }
-  };
 
-  await loadPlugins(pluginsPath);
+    // Telegram Stars requires XTR. Price is in smallest units (1 Star = 1 unit).
+    return ctx.replyWithInvoice({
+      title: "Buy Sakuranite",
+      description: `Purchase ${amount * 50} Sakuranite`,
+      payload: `sakuranite_topup_${ctx.from.id}_${amount}`,
+      provider_token: "", // Empty for Telegram Stars
+      currency: "XTR",
+      prices: [{ label: "Stars", amount: amount }],
+    });
+  });
+
+  bot.on("pre_checkout_query", async (ctx) => {
+    // Approve all checkouts
+    await ctx.answerPreCheckoutQuery(true);
+  });
+
+  bot.on("successful_payment", async (ctx) => {
+    const payment = ctx.message.successful_payment;
+    const payload = payment.invoice_payload;
+
+    if (payload.startsWith("sakuranite_topup_")) {
+      const parts = payload.split("_");
+      const userId = parts[2];
+      const starsSpent = parseInt(parts[3]) || payment.total_amount;
+
+      const sakuraniteEarned = starsSpent * 50;
+
+      const { Economy } = await import("../lib/Components/Economy.js");
+      const economy = Economy(db);
+      economy.addSakuranite(userId, sakuraniteEarned);
+      await db.writeToFile();
+
+      return ctx.reply(
+        `✦ Blackstar ✦\n\nPayment successful! You purchased ${sakuraniteEarned} Sakuranite with ${starsSpent} Telegram Stars.\nThank you for supporting Blackstar!`,
+      );
+    }
+  });
 
   bot
-    .launch()
+    .launch({
+      polling: {
+        retryOnConflict: true,
+        maxRetryDelay: 30000,
+      },
+    })
     .then(() => {
-      console.log(
-        "✅ Telegram bot started successfully.",
-      );
+      console.log("✅ Telegram bot started successfully.");
       global.tgBot = bot;
     })
     .catch((err) => {
-      console.error(
-        "❌ Failed to start Telegram bot:",
-        err,
-      );
+      console.error("❌ Failed to start Telegram bot:", err);
     });
 
   process.once("SIGINT", () => bot.stop("SIGINT"));

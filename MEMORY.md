@@ -21,3 +21,6 @@
 - Investigated tools like `uvx mcp2cli` for creating CLI representations of MCP remote servers.
 - Generated a `SKILL.md` under `.agents/skills/kone_mcp/` detailing how to use `mcp2cli` against an MCP endpoint.
 - Note: `https://go.kone.vc/mcp` returns a 400 Bad Request error `{"error":{"code":400,"message":"Incorrect app URL"}}`, requiring a fully-qualified app URL or correct credentials to work properly with mcp2cli.
+
+* Architecture: The Telegram bot now runs on `telegraf-hardened` v6, integrating `tg/middleware.js` to enforce newsletter subscriptions and role limits (owner, partner, premium) seamlessly mirroring the WhatsApp bot implementations using `lib/Database.js`.
+* Economy: A `/topup` command for the Telegram bot accepts native Telegram Stars payments (`XTR` currency), where successful checkouts grant users Sakuranite (`lib/Components/Economy.js`) at a ratio of 50 Sakuranite per 1 Star.
