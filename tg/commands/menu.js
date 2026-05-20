@@ -1,4 +1,4 @@
-import { settings } from "../config/settings.js";
+
 
 export async function sendMenu(bot, chatId, name = "User") {
   const now = new Date();
@@ -21,11 +21,11 @@ export async function sendMenu(bot, chatId, name = "User") {
   const caption = `<blockquote>
 <b>👋 Hello, ${name}</b>
 
-Selamat datang di ${settings.botName}
+Selamat datang di ${global.botname || "Blackstar"}
 Ketik <code>/info</code> untuk melihat informasi bot
 
-<b>Developer</b> : ${settings.developer}
-<b>Version</b>   : ${settings.version}
+<b>Developer</b> : ${global.ownerName || "Developer"}
+<b>Version</b>   : "0.1.0"
 <b>Tanggal</b>   : ${tanggal}
 <b>Waktu</b>     : ${waktu}
 
@@ -33,12 +33,12 @@ Ketik <code>/info</code> untuk melihat informasi bot
 │  ⌁ /info => Informasi Bot
 │  ⌁ /dev  => Informasi Developer
 │  ⌁ /help => Help / Panduan
-└  ⌁ ${settings.botName}
+└  ⌁ ${global.botname || "Blackstar"}
 
 <b>Silahkan Pilih menu kategori dibawah ini</b>
 </blockquote>`;
 
-  await bot.telegram.sendPhoto(chatId, settings.thumbnail, {
+  await bot.telegram.sendPhoto(chatId, "https://raw.githubusercontent.com/uploadgh/dat4/main/uploads/b8008f-1776332459084.jpg", {
     caption,
     parse_mode: "HTML",
     reply_markup: {
@@ -71,7 +71,7 @@ Temukan berbagai informasi dengan cepat melalui fitur pencarian yang tersedia.
 │ /ttsearch    • Cari vidio di tiktok
 └——————————————>
 
-<i>Powered by ${settings.botName}</i>
+<i>Powered by ${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
   await bot.telegram.sendMessage(chatId, text, {
@@ -101,7 +101,7 @@ Download video / foto dari berbagai platform dengan cepat dan mudah.
 │ /ytplay • Play yt vidio (support download mp4/mp3)
 └——————————————>
 
-<i>Powered by ${settings.botName}</i>
+<i>Powered by ${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
   await bot.telegram.sendMessage(chatId, text, {
@@ -132,7 +132,7 @@ Akses fitur pencarian data akun dari berbagai platform.
 │ /ghstalk   • Github Stalker
 └——————————————————————————>
 
-<i>Powered by ${settings.developer}</i>
+<i>Powered by ${global.ownerName || "Developer"}</i>
 </blockquote>`,
     {
       parse_mode: "HTML",

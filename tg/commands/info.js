@@ -1,4 +1,4 @@
-import { settings } from "../config/settings.js";
+
 
 export async function sendInfo(bot, chatId, user, totalCommands, botStartTime) {
   const uptime = Math.floor((Date.now() - botStartTime) / 1000);
@@ -13,9 +13,9 @@ export async function sendInfo(bot, chatId, user, totalCommands, botStartTime) {
 
 🤖 *BOT INFO*
 🚀 Status: Online
-⚙️ Mode: ${settings.runtime}
-📡 Bot: ${settings.botName}
-👨‍💻 Developer: ${settings.developer}
+⚙️ Mode: "Node.js ESM"
+📡 Bot: ${global.botname || "Blackstar"}
+👨‍💻 Developer: ${global.ownerName || "Developer"}
 
 📊 *STATISTIK BOT*
 📈 Total Commands: \`${totalCommands}\`

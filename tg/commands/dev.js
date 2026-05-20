@@ -1,4 +1,4 @@
-import { settings } from "../config/settings.js";
+
 import axios from "axios";
 
 async function githubStalk(username) {
@@ -53,7 +53,7 @@ export async function sendDeveloperInfo(bot, chatId) {
 <blockquote>
 <strong>👤 INFORMATION DEVELOPER</strong>
 
-• <strong>Name</strong>          : ${settings.developer}
+• <strong>Name</strong>          : ${global.ownerName || "Developer"}
 • <strong>Telegram</strong>   : @kyynxz31
 • <strong>WhatsApp</strong> : wa.me/6281239075413
 • <strong>REST API</strong>   : api.lexcode.biz.id

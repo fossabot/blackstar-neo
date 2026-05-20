@@ -1,5 +1,5 @@
 import gplay from "google-play-scraper";
-import { settings } from "../../config/settings.js";
+
 
 export async function playStoreSearchCommand(bot, chatId, query) {
   try {
@@ -36,7 +36,7 @@ export async function playStoreSearchCommand(bot, chatId, query) {
 <b>🔗 Play Store:</b>
 ${app.url}
 
-<i>Powered by ${settings.botName}</i>
+<i>Powered by ${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
     await bot.telegram.sendPhoto(chatId, app.icon, {

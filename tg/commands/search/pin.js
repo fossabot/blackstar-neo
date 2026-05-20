@@ -1,5 +1,5 @@
 import axios from "axios";
-import { settings } from "../../config/settings.js";
+
 
 export async function pinterestSearchCommand(bot, chatId, query) {
   try {
@@ -38,7 +38,7 @@ ${pin.caption || "No caption"}
 <strong>🔗 Pin URL</strong>
 ${pin.url}
 
-<i>Powered by ${settings.botName}</i>
+<i>Powered by ${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
     await bot.telegram.sendPhoto(chatId, pin.imageUrl, {

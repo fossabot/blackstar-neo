@@ -26,3 +26,5 @@
 * Economy: A `/topup` command for the Telegram bot accepts native Telegram Stars payments (`XTR` currency), where successful checkouts grant users Sakuranite (`lib/Components/Economy.js`) at a ratio of 50 Sakuranite per 1 Star.
 
 * Bug Fixes: Applied safe coercion to `escapeHtml` in AI helpers, standardized `githubStalk` helper to return explicit `{ success, data, message }` responses, secured Telegram Stars `/topup` implementation by taking the amount directly from the API rather than the insecure user-controlled payload, and extended middleware coverage safely over `callback_query` updates using optional chaining.
+
+* Configuration: The Telegram commands now directly rely on `global.*` properties populated by `load_globals.js` from the root `config.js`, eliminating duplicate `settings.js` configurations and keeping them synced with the WhatsApp bot.

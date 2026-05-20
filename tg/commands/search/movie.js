@@ -1,5 +1,5 @@
 import axios from "axios";
-import { settings } from "../../config/settings.js";
+
 
 export async function movieSearchCommand(bot, chatId, query) {
   try {
@@ -39,7 +39,7 @@ ${data.Plot}
 <b>🔗 IMDb:</b>
 ${`https://www.imdb.com/title/${data.imdbID}/`}
 
-<i>Powered by ${settings.botName}</i>
+<i>Powered by ${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
     if (data.Poster && data.Poster !== "N/A") {

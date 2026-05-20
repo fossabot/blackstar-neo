@@ -1,5 +1,5 @@
 import axios from "axios";
-import { settings } from "../../config/settings.js";
+
 
 export async function tiktokDownloader(bot, chatId, url) {
   try {
@@ -38,7 +38,7 @@ export async function tiktokDownloader(bot, chatId, url) {
 💬 Comments  : ${comments}
 ↪️ Shares    : ${shares}
 
-<i>${settings.botName}</i>
+<i>${global.botname || "Blackstar"}</i>
 </blockquote>`;
 
     if (videoUrl) {
