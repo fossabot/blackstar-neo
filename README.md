@@ -14,6 +14,7 @@
 [![Forks](https://img.shields.io/github/forks/blackberryhazard-org/blackstar)](https://github.com/blackberryhazard-org/blackstar/network/members)
 [![Issues](https://img.shields.io/github/issues/blackberryhazard-org/blackstar)](https://github.com/blackberryhazard-org/blackstar)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fblackberryhazard-org%2Fblackstar.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fblackberryhazard-org%2Fblackstar?ref=badge_shield)
 [![DeepSource](https://app.deepsource.com/gh/blackberryhazard-org/blackstar.svg/?label=active+issues&show_trend=false&token=m7kgoYuFrGoUySJ9diJ7Zwix)](https://app.deepsource.com/gh/blackberryhazard-org/blackstar/)
 
 </div>
@@ -121,3 +122,7 @@ Starseed utilizes the following external APIs:
 - [ZenzzXD](https://github.com/ZenzzXD) — Zennz API
 
 These services are used as external integrations and are not directly affiliated with the development of Starseed.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fblackberryhazard-org%2Fblackstar.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fblackberryhazard-org%2Fblackstar?ref=badge_large)
