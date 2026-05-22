@@ -17,12 +17,12 @@
     "axios": "^1.15.0",
     "fflate": "^0.8.2",
     "file-type": "21.3.4",
+    "google-play-scraper": "^10.1.2",
     "lru-cache": "^11.3.6",
     "p-queue": "^9.1.2",
     "pino": "^10.3.1",
     "qrcode": "~1.5.4",
-    "sawit-utils": "^0.2.0",
-    "google-play-scraper": "^10.1.2",
+    "sawit-utils": "^0.3.0",
     "telegraf-hardened": "^6.0.0",
     "yt-search": "^2.13.1"
   }

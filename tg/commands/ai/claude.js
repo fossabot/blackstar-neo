@@ -1,5 +1,5 @@
 import axios from "axios";
-import { escapeHtml, looksLikeCode } from "../../../lib/ai-helper.js";
+import { escapeHTML, looksLikeCode } from "sawit-utils";
 
 export async function claudeCommand(bot, chatId, prompt) {
   try {
@@ -28,13 +28,13 @@ export async function claudeCommand(bot, chatId, prompt) {
     if (looksLikeCode(result)) {
       caption = `<blockquote><strong>🧠 CLAUDE 3 HAIKU [ Code ]</strong></blockquote>
 
-<pre>${escapeHtml(result)}</pre>
+<pre>${escapeHTML(result)}</pre>
 
 <strong>Klik tombol dibawah untuk prompt instan</strong>`;
     } else {
       caption = `<blockquote><strong>🧠 CLAUDE 3 HAIKU [ Text ]</strong>
 
-➜ ${escapeHtml(result)}
+➜ ${escapeHTML(result)}
 
 <strong>Klik tombol dibawah untuk prompt instan</strong>
 </blockquote>`;
