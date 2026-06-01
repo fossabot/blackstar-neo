@@ -1,4 +1,4 @@
-import { nekolabs } from "../../../lib/Request.js";
+import { nekolabs } from "sawit-utils";
 import { resizeImage } from "../../../lib/Utilities.js";
 
 export default {

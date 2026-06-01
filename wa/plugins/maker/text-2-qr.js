@@ -1,4 +1,4 @@
-import { faa } from "../../../lib/Request.js";
+import { faa } from "sawit-utils";
 
 export default {
   command: "text2qr",

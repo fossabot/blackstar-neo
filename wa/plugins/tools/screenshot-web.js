@@ -1,4 +1,4 @@
-import { zenzxz } from "../../../lib/Request.js";
+import { zenzxz } from "sawit-utils";
 import { isURL } from "../../../lib/Utilities.js";
 
 export default {

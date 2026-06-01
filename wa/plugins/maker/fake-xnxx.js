@@ -1,4 +1,4 @@
-import { deline } from "../../../lib/Request.js";
+import { deline } from "sawit-utils";
 import { randomInteger } from "../../../lib/Utilities.js";
 
 export default {

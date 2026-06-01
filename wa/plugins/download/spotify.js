@@ -1,4 +1,4 @@
-import { nexray } from "../../../lib/Request.js";
+import { nexray } from "sawit-utils";
 
 export default {
   command: "spotify",

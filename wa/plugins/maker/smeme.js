@@ -1,4 +1,4 @@
-import { deline } from "../../../lib/Request.js";
+import { deline } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { isMimeImage } from "../../../lib/Utilities.js";
 

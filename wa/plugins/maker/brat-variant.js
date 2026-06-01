@@ -1,4 +1,4 @@
-import { deline, nexray } from "../../../lib/Request.js";
+import { deline, nexray } from "sawit-utils";
 
 export default {
   command: ["bratanime", "bratgirl"],

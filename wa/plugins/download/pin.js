@@ -1,4 +1,4 @@
-import { nekolabs } from "../../../lib/Request.js";
+import { nekolabs } from "sawit-utils";
 
 export default {
   command: "pin",

@@ -1,7 +1,7 @@
 import { isJidNewsletter } from "@itsliaaa/baileys";
 import ytsearch from "yt-search";
 
-import { nexray } from "../../../lib/Request.js";
+import { nexray } from "sawit-utils";
 import { frame, formatNumber } from "../../../lib/Utilities.js";
 
 export default {

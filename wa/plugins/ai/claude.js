@@ -1,17 +1,19 @@
-import { nexray } from "sawit-utils";
+import { lexcode } from "sawit-utils";
 
 export default {
-  command: "balogo",
-  category: "maker",
+  command: ["claude"],
+  category: "ai",
   async run(m, { sock, isPrefix, command, text }) {
     try {
       if (!text) return m.reply(`👉🏻 *Example*: ${isPrefix + command} hello`);
       m.react("🕒");
-      const data = await nexray("maker/balogo", {
+
+      const response = await lexcode("ai/claude-3-haiku", {
         text,
       });
-      if (!Buffer.isBuffer(data)) return m.reply("❌ Failed to get data.");
-      sock.sendMedia(m.chat, data, "", m);
+
+      if (!response || !response.status) return m.reply("❌ Failed to get data.");
+      m.reply(response.result);
     } catch (error) {
       console.error(error);
       m.reply("❌ " + error.message);

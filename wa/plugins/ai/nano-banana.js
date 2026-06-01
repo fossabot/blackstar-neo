@@ -1,4 +1,4 @@
-import { faa } from "../../../lib/Request.js";
+import { faa } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { isMimeImage } from "../../../lib/Utilities.js";
 

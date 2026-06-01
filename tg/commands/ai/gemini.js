@@ -1,5 +1,5 @@
 import axios from "axios";
-import { escapeHtml, looksLikeCode } from "../../../lib/ai-helper.js";
+import { escapeHTML, looksLikeCode } from "sawit-utils";
 
 export async function geminiCommand(bot, chatId, prompt) {
   try {
@@ -28,11 +28,11 @@ export async function geminiCommand(bot, chatId, prompt) {
     if (looksLikeCode(result)) {
       caption = `<blockquote><strong>GEMINI 2.5 FLASH RESPONSE</strong></blockquote>
 
-<pre>${escapeHtml(result)}</pre>`;
+<pre>${escapeHTML(result)}</pre>`;
     } else {
       caption = `<blockquote><strong>GEMINI 2.5 FLASH RESPONSE</strong>
 
-➜ ${escapeHtml(result)}
+➜ ${escapeHTML(result)}
 </blockquote>`;
     }
 

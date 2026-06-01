@@ -1,4 +1,4 @@
-import { nexray } from "../../../lib/Request.js";
+import { nexray } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { fetchAsBuffer, randomInteger } from "../../../lib/Utilities.js";
 

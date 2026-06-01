@@ -1,6 +1,6 @@
 import ytsearch from "yt-search";
 
-import { nexray } from "../../../lib/Request.js";
+import { nexray } from "sawit-utils";
 
 export default {
   command: ["playvideo", "ptv"],

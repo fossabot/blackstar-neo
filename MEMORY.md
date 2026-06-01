@@ -30,3 +30,8 @@
 * Configuration: The Telegram commands now directly rely on `global.*` properties populated by `load_globals.js` from the root `config.js`, eliminating duplicate `settings.js` configurations and keeping them synced with the WhatsApp bot.
 
 * Architecture: Added `messageLogger` execution inside Telegram's middleware (`tg/socket.js`) to ensure both WhatsApp and Telegram events print uniform connection/chat logs in the console.
+
+* Refactoring AI Plugins:
+  * We migrated text-generation commands from a monolithic `text-generation.js` file into specific `gemini.js` and `claude.js` files under `wa/plugins/ai`. Unsupported models (deepseek, glm, etc.) were deliberately removed as requested.
+  * We updated `sawit-utils` to version `0.3.0` and now rely on its specific functions (`escapeHTML`, `looksLikeCode`, `lexcode`), eliminating internal equivalents from `lib/ai-helper.js`.
+  * Further deprecated `lib/Request.js` entirely in favor of directly importing request functions (`lexcode`, `nexray`, `zenzxz`, etc.) from `sawit-utils`. Over 70 files updated.

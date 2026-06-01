@@ -1,6 +1,6 @@
 import { isJidNewsletter } from "@itsliaaa/baileys";
 
-import { zenzxz } from "../../../lib/Request.js";
+import { zenzxz } from "sawit-utils";
 import { fetchAsBuffer, frame, toTime } from "../../../lib/Utilities.js";
 
 export default {

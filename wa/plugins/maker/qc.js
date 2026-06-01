@@ -1,4 +1,4 @@
-import { nekolabs } from "../../../lib/Request.js";
+import { nekolabs } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { fetchAsBuffer } from "../../../lib/Utilities.js";
 

@@ -1,5 +1,5 @@
 import { REACTION_TEXTS } from "../../../lib/Constants.js";
-import { request } from "../../../lib/Request.js";
+import { request } from "sawit-utils";
 
 export default {
   command: Object.keys(REACTION_TEXTS),

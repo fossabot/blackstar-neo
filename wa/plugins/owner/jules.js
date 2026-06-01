@@ -1,4 +1,4 @@
-import { request } from "../../../lib/Request.js";
+import { request } from "sawit-utils";
 import config from "../../../config.js";
 
 export default {

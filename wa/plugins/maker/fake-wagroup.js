@@ -1,4 +1,4 @@
-import { zenzxz } from "../../../lib/Request.js";
+import { zenzxz } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { fetchAsBuffer, randomInteger } from "../../../lib/Utilities.js";
 

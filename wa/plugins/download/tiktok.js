@@ -1,6 +1,6 @@
 import { isJidNewsletter } from "@itsliaaa/baileys";
 
-import { zenzxz } from "../../../lib/Request.js";
+import { zenzxz } from "sawit-utils";
 
 export default {
   command: ["tiktok", "tikwm", "ttmp3", "ttvn"],

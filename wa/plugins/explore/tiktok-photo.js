@@ -1,4 +1,4 @@
-import { nexray } from "../../../lib/Request.js";
+import { nexray } from "sawit-utils";
 import { frame, resizeImage } from "../../../lib/Utilities.js";
 
 export default {

@@ -1,5 +1,5 @@
 import { URL_EXTRACT_REGEX } from "../../../lib/Constants.js";
-import { nekolabs, nexray, zenzxz } from "../../../lib/Request.js";
+import { nekolabs, nexray, zenzxz } from "sawit-utils";
 import { instagram } from "../../../lib/Scraper.js";
 import { isURL, resizeImage } from "../../../lib/Utilities.js";
 

@@ -1,4 +1,4 @@
-import { faa, nexray } from "../../../lib/Request.js";
+import { faa, nexray } from "sawit-utils";
 import { uguu } from "../../../lib/Scraper.js";
 import { isMimeImage, isMimeVideo } from "../../../lib/Utilities.js";
 
