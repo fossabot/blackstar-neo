@@ -1,53 +1,58 @@
-import "./load_globals.js";
 import { spawn } from "child_process";
 import { fileURLToPath } from "url";
-import path from "path";
-import config from "./config.js";
-import startTelegramBot from "./tg/socket.js";
 
-try {
-  await startTelegramBot(config);
-} catch (error) {
-  console.error("Failed to initialize Telegram Bot:", error);
-}
+const CWD = fileURLToPath(new URL(".", import.meta.url));
+const LOADER = fileURLToPath(new URL("./loader.js", import.meta.url));
 
-const WA_CWD = fileURLToPath(new URL(".", import.meta.url));
-const SETUP_PATH = fileURLToPath(new URL("./wa/socket.js", import.meta.url));
-const LOAD_GLOBALS_PATH = fileURLToPath(
-  new URL("./load_globals.js", import.meta.url),
-);
+const BOT_CONFIGS = [
+  {
+    name: "Whatsapp Bot",
+    scriptPath: fileURLToPath(new URL("./wa/socket.js", import.meta.url)),
+    args: process.argv.slice(2)
+  },
+  {
+    name: "Telegram Bot",
+    scriptPath: fileURLToPath(new URL("./tg/socket.js", import.meta.url)), 
+    args: []
+  }
+];
 
-const StartSakurabot = () => {
+const startBotProcess = (bot) => {
+  console.log(`🚀 Starting ${bot.name} service...`);
+
   const instance = spawn(
     process.execPath,
     [
       "--import",
-      LOAD_GLOBALS_PATH,
+      LOADER,
       ...process.execArgv,
-      SETUP_PATH,
-      ...process.argv.slice(2),
+      bot.scriptPath,
+      ...bot.args,
     ],
     {
-      cwd: WA_CWD,
+      cwd: CWD,
       stdio: ["inherit", "inherit", "inherit", "ipc"],
-    },
+    }
   );
 
-  instance.once("message", (data) => {
+  instance.on("message", (data) => {
     if (data === "leak" || data === "reset") {
       console[data === "leak" ? "warn" : "log"](
         data === "leak"
-          ? "⚠️ RAM limit reached, restarting..."
-          : "🔃 Restarting...",
+          ? `⚠️ [${bot.name}] RAM limit reached, restarting...`
+          : `🔃 [${bot.name}] Restarting...`,
       );
       instance.kill("SIGTERM");
     }
   });
 
   instance.once("exit", (code) => {
-    console.error(`⚠️ Exited with code ${code}`);
-    if (code !== 0) setTimeout(StartSakurabot, 2000);
+    console.error(`⚠️ [${bot.name}] Exited with code/signal ${code}`);
+    
+    setTimeout(() => startBotProcess(bot), 2000);
   });
 };
 
-StartSakurabot();
+BOT_CONFIGS.forEach((bot) => {
+  startBotProcess(bot);
+});

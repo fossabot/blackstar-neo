@@ -22,20 +22,6 @@
     }
   },
   "javascript": {
-    "globals": [
-      "ownerName",
-      "ownerNumber",
-      "botName",
-      "botNumber",
-      "footer",
-      "defaultLimit",
-      "localTimezone",
-      "googleApiKey",
-      "authFolder",
-      "databaseFilename",
-      "storeFilename",
-      "temporaryFolder"
-    ],
     "formatter": {
       "quoteStyle": "double",
       "semicolons": "always",
