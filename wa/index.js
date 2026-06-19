@@ -61,7 +61,7 @@ const startWhatsappBot = async () => {
         startWhatsappBot();
       } else {
         console.log(
-          "⚠️ You are logged out. Please remove the auth_info folder and restart to login again.",
+          "⚠️ You are logged out. Please remove the auth folder and restart to login again.",
         );
       }
     } else if (connection === "open") {
